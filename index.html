@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temperature Converter</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #141e30, #243b55);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.converter-card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    padding: 35px;
+    width: 420px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+h1 {
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+p {
+    margin-bottom: 25px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    outline: none;
+}
+
+.dropdowns {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+select {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+span {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #00c6ff;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0099cc;
+    transform: scale(1.03);
+}
+
+.result-box {
+    margin-top: 25px;
+    padding: 15px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    font-size: 18px;
+    min-height: 55px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="converter-card">
+        <h1>🌡 Temperature Converter</h1>
+        <p>Convert between Celsius, Fahrenheit & Kelvin</p>
+
+        <input type="number" id="temperature" placeholder="Enter Temperature">
+
+        <div class="dropdowns">
+            <select id="fromUnit">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+
+            <span>⇄</span>
+
+            <select id="toUnit">
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="celsius">Celsius (°C)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+        </div>
+
+        <button onclick="convertTemperature()">Convert</button>
+
+        <div class="result-box" id="result">
+            Your result will appear here
+        </div>
+    </div>
+</div>
+
+<script>
+function convertTemperature() {
+    let temp = parseFloat(document.getElementById("temperature").value);
+    let from = document.getElementById("fromUnit").value;
+    let to = document.getElementById("toUnit").value;
+    let result = document.getElementById("result");
+
+    if (isNaN(temp)) {
+        result.innerHTML = "⚠ Please enter a valid temperature!";
+        return;
+    }
+
+    let celsius;
+
+    if (from === "celsius") {
+        celsius = temp;
+    } 
+    else if (from === "fahrenheit") {
+        celsius = (temp - 32) * 5 / 9;
+    } 
+    else if (from === "kelvin") {
+        celsius = temp - 273.15;
+    }
+
+    let finalValue;
+
+    if (to === "celsius") {
+        finalValue = celsius;
+    } 
+    else if (to === "fahrenheit") {
+        finalValue = (celsius * 9 / 5) + 32;
+    } 
+    else if (to === "kelvin") {
+        finalValue = celsius + 273.15;
+    }
+
+    result.innerHTML = `${temp} ${from} = <strong>${finalValue.toFixed(2)}</strong> ${to}`;
+}
+</script>
+
+</body>
+</html>
